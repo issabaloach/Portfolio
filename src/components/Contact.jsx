@@ -1,31 +1,41 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { useState } from "react"
+import { Mail, Phone, MapPin } from "lucide-react"
+import Popup from "./Popup"
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+    name: "",
+    email: "",
+    message: "",
+  })
+  const [showPopup, setShowPopup] = useState(false)
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     // Handle form submission
-    console.log(formData);
-  };
+    console.log(formData)
+    // Show popup
+    setShowPopup(true)
+    // Reset form
+    setFormData({ name: "", email: "", message: "" })
+  }
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    });
-  };
+    })
+  }
+
+  const closePopup = () => {
+    setShowPopup(false)
+  }
 
   return (
     <section id="contact" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-16">Contact Me</h2>
-        
+
         <div className="grid md:grid-cols-2 gap-12">
           <div>
             <h3 className="text-xl font-semibold mb-6">Get in Touch</h3>
@@ -97,8 +107,10 @@ const Contact = () => {
           </form>
         </div>
       </div>
+      {showPopup && <Popup message="Your message has been sent successfully!" onClose={closePopup} />}
     </section>
-  );
-};
+  )
+}
 
-export default Contact;
+export default Contact
+
