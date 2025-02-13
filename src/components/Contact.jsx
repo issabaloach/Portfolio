@@ -3,6 +3,8 @@ import { Mail, Phone, MapPin } from "lucide-react"
 import Popup from "./Popup"
 import emailjs from '@emailjs/browser'
 
+emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -20,12 +22,21 @@ const Contact = () => {
     setError(null)
     
     try {
+      console.log('Checking environment variables:', {
+        serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      })
+
       const templateParams = {
         from_name: formData.name,
         from_email: formData.email,
         message: formData.message,
-        to_name: 'Muhammad',
+        to_name: 'Muhammad Issa',
+        to_email: 'issakhan2k03@gmail.com'
       }
+
+      console.log('Template params:', templateParams)
 
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -37,8 +48,8 @@ const Contact = () => {
       setShowPopup(true)
       setFormData({ name: "", email: "", message: "" })
     } catch (error) {
-      console.error('Error sending email:', error)
-      setError('Failed to send message. Please try again.')
+      console.error('Detailed error:', error)
+      setError(`Failed to send message: ${error.message}`)
     } finally {
       setIsLoading(false)
     }
