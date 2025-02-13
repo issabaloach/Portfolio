@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Mail, Phone, MapPin } from "lucide-react"
 import Popup from "./Popup"
+import emailjs from '@emailjs/browser'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -8,16 +9,39 @@ const Contact = () => {
     email: "",
     message: "",
   })
+  
   const [showPopup, setShowPopup] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Handle form submission
-    console.log(formData)
-    // Show popup
-    setShowPopup(true)
-    // Reset form
-    setFormData({ name: "", email: "", message: "" })
+    setIsLoading(true)
+    setError(null)
+    
+    try {
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_name: 'Muhammad',
+      }
+
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+
+      setShowPopup(true)
+      setFormData({ name: "", email: "", message: "" })
+    } catch (error) {
+      console.error('Error sending email:', error)
+      setError('Failed to send message. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleChange = (e) => {
@@ -34,7 +58,7 @@ const Contact = () => {
   return (
     <section id="contact" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-16">Contact Me</h2>
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-16">Let's Connect</h2>
 
         <div className="grid md:grid-cols-2 gap-12">
           <div>
@@ -68,6 +92,7 @@ const Contact = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 focus:border-transparent"
                 required
+                disabled={isLoading}
               />
             </div>
             <div>
@@ -82,6 +107,7 @@ const Contact = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 focus:border-transparent"
                 required
+                disabled={isLoading}
               />
             </div>
             <div>
@@ -96,13 +122,18 @@ const Contact = () => {
                 rows={4}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 focus:border-transparent"
                 required
+                disabled={isLoading}
               />
             </div>
+            {error && (
+              <div className="text-red-500 text-sm">{error}</div>
+            )}
             <button
               type="submit"
-              className="w-full px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+              className="w-full px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+              disabled={isLoading}
             >
-              Send Message
+              {isLoading ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         </div>
@@ -113,4 +144,3 @@ const Contact = () => {
 }
 
 export default Contact
-
