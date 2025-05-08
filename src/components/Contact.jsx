@@ -5,6 +5,10 @@ import emailjs from '@emailjs/browser'
 
 emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
 
+const username = import.meta.env.VITE_GITHUB_USERNAME;
+const url = `https://api.github.com/users/${username}/repos?sort=updated&per_page=3`;
+
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -26,6 +30,7 @@ const Contact = () => {
         serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
         templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
       })
 
       const templateParams = {
