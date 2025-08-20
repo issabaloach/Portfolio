@@ -49,24 +49,24 @@ const Projects = () => {
             liveLink: "https://perfect-recipe-orcin.vercel.app/",
           },
           {
-            title: "DoctorNow",
+            title: "Unhouseddocs",
             description:
-              "A telemedicine application for virtual doctor consultations with appointment scheduling and becoming a doctor",
+              "A web application built collaboratively for a client, aimed at helping manage and organize documentation for unhoused individuals. Developed with my friend for his client, I contributed to building and optimizing the app’s frontend and backend features to ensure a smooth and user-friendly experience.",
             image:
-              "https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+              "https://images.pexels.com/photos/590044/pexels-photo-590044.jpeg",
             technologies: ["Nextjs", "javaScript", "Node.js", "MongoDB"],
-            githubLink: "https://github.com/issabaloach/DoctorNow",
-            liveLink: "https://doctor-now-ruddy.vercel.app/",
+            githubLink: "https://github.com/issabaloach",
+            liveLink: "https://unhouseddocs.com/",
           },
           {
-            title: "E-commerce Easy Shop",
+            title: "Dynamic E-Commerce - Shop App",
             description:
               "A responsive e-commerce platform with product management, shopping cart, and secure payment integration.",
             image:
               "https://images.pexels.com/photos/167703/pexels-photo-167703.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
             technologies: ["React","Firebase", "MongoDB", "Tailwind CSS"],
-            githubLink: "https://github.com/issabaloach/EasyShop",
-            liveLink: "https://easy-shop-five.vercel.app/",
+            githubLink: "https://github.com/issabaloach/Dynamic-E-Commerce",
+            liveLink: "https://dynamic-e-commerce.vercel.app/",
           },
         ]);
       }
